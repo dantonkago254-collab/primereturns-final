@@ -200,6 +200,7 @@ const authLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { ok: false, error: 'Too many authentication attempts. Please wait and try again.' },
+  trustProxy: (ip) => true,
 });
 
 const paymentLimiter = rateLimit({
@@ -208,6 +209,7 @@ const paymentLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { ok: false, error: 'Too many payment attempts. Please wait and try again.' },
+  trustProxy: (ip) => true,
 });
 
 const clampPagination = (query, defaultLimit = 50, maxLimit = 250) => {
