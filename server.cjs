@@ -36,9 +36,10 @@ if (isProduction && (!JWT_SECRET || JWT_SECRET.length < 32)) {
   throw new Error('JWT_SECRET must be set to a strong 32+ character value in production.');
 }
 
-if (isProduction && !DATABASE_URL) {
-  throw new Error('DATABASE_URL is required in production. Add Railway MySQL and set DATABASE_URL.');
-}
+// DATABASE_URL is validated lazily via requireDb() / initDb() so Railway has
+// time to inject the reference variable (${{ MySQL.DATABASE_URL }}) before the
+// database is actually needed.  Throwing here would crash the process before
+// Railway can resolve the variable.
 
 if (isProduction && !APP_URL) {
   throw new Error('APP_URL is required in production. Set it to your Railway public URL.');
